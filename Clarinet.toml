@@ -1,0 +1,16 @@
+[project]
+name = "stacks-nft-marketplace"
+description = "NFT marketplace with fixed-price and auction support"
+authors = ["serayd61"]
+telemetry = false
+cache_dir = ".cache"
+requirements = []
+
+[contracts.nft-marketplace]
+path = "contracts/nft-marketplace.clar"
+clarity_version = 3
+epoch = 3.0
+
+[repl.analysis]
+passes = ["check_checker"]
+
