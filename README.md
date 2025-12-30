@@ -130,3 +130,10 @@ MIT License
 
 Contributions welcome!
 
+
+
+---
+## Status (December 2024)
+- ✅ NFT listing and buying on mainnet
+- ✅ Royalty support
+- ✅ STX payments
