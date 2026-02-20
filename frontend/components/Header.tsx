@@ -1,21 +1,41 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { connectWallet, disconnectWallet, isUserSignedIn, getStxAddress, truncateAddress } from '@/lib/stacks';
 import { Wallet, LogOut, Menu, X } from 'lucide-react';
+
+const truncateAddress = (address: string) => {
+  if (!address) return '';
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [stacksLib, setStacksLib] = useState<any>(null);
 
   useEffect(() => {
-    const connected = isUserSignedIn();
-    setIsConnected(connected);
-    if (connected) {
-      setAddress(getStxAddress());
-    }
+    import('@/lib/stacks').then((lib) => {
+      setStacksLib(lib);
+      const connected = lib.isUserSignedIn();
+      setIsConnected(connected);
+      if (connected) {
+        setAddress(lib.getStxAddress());
+      }
+    });
   }, []);
+
+  const handleConnect = () => {
+    if (stacksLib) {
+      stacksLib.connectWallet();
+    }
+  };
+
+  const handleDisconnect = () => {
+    if (stacksLib) {
+      stacksLib.disconnectWallet();
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
@@ -54,7 +74,7 @@ export default function Header() {
                   <span className="text-sm font-medium">{truncateAddress(address || '')}</span>
                 </div>
                 <button
-                  onClick={disconnectWallet}
+                  onClick={handleDisconnect}
                   className="p-2 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors"
                 >
                   <LogOut size={20} />
@@ -62,7 +82,7 @@ export default function Header() {
               </div>
             ) : (
               <button
-                onClick={connectWallet}
+                onClick={handleConnect}
                 className="btn-primary flex items-center gap-2"
               >
                 <Wallet size={18} />

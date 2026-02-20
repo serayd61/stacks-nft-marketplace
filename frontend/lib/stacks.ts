@@ -1,5 +1,6 @@
+'use client';
+
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
 export const userSession = new UserSession({ appConfig });
@@ -25,10 +26,12 @@ export const disconnectWallet = () => {
 };
 
 export const isUserSignedIn = () => {
+  if (typeof window === 'undefined') return false;
   return userSession.isUserSignedIn();
 };
 
 export const getUserData = () => {
+  if (typeof window === 'undefined') return null;
   if (isUserSignedIn()) {
     return userSession.loadUserData();
   }
@@ -48,7 +51,7 @@ export const getStxAddress = () => {
 
 export const getNetwork = () => {
   const network = process.env.NEXT_PUBLIC_NETWORK || 'testnet';
-  return network === 'mainnet' ? new StacksMainnet() : new StacksTestnet();
+  return network;
 };
 
 export const truncateAddress = (address: string) => {
