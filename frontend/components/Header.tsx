@@ -1,41 +1,60 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Wallet, LogOut, Menu, X } from 'lucide-react';
-
-const truncateAddress = (address: string) => {
-  if (!address) return '';
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
-};
+import { 
+  connectWallet, 
+  disconnectWallet, 
+  isUserSignedIn, 
+  getStxAddress, 
+  truncateAddress 
+} from '@/lib/stacks';
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [stacksLib, setStacksLib] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    import('@/lib/stacks').then((lib) => {
-      setStacksLib(lib);
-      const connected = lib.isUserSignedIn();
+    setMounted(true);
+    const checkConnection = () => {
+      const connected = isUserSignedIn();
       setIsConnected(connected);
       if (connected) {
-        setAddress(lib.getStxAddress());
+        setAddress(getStxAddress());
       }
-    });
+    };
+    checkConnection();
   }, []);
 
-  const handleConnect = () => {
-    if (stacksLib) {
-      stacksLib.connectWallet();
-    }
-  };
+  const handleConnect = useCallback(() => {
+    connectWallet();
+  }, []);
 
-  const handleDisconnect = () => {
-    if (stacksLib) {
-      stacksLib.disconnectWallet();
-    }
-  };
+  const handleDisconnect = useCallback(() => {
+    disconnectWallet();
+  }, []);
+
+  if (!mounted) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-stacks-purple to-pink-500 flex items-center justify-center">
+                <span className="text-xl">⚡</span>
+              </div>
+              <div>
+                <h1 className="font-display font-bold text-lg">Stacks Deployer</h1>
+                <p className="text-xs text-gray-400">25 Smart Contracts</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
