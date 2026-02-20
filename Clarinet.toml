@@ -1,17 +1,140 @@
 [project]
 name = "stacks-nft-marketplace"
-description = "NFT marketplace with fixed-price and auction support"
+description = "Complete Stacks smart contract platform with NFT, DeFi, DAO, and utility contracts"
 authors = ["serayd61"]
 telemetry = false
 cache_dir = ".cache"
 requirements = []
 
+# NFT Contracts
 [contracts.nft-marketplace]
 path = "contracts/nft-marketplace.clar"
 clarity_version = 3
 epoch = 3.0
 
+[contracts.nft-collection]
+path = "contracts/nft-collection.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.nft-staking]
+path = "contracts/nft-staking.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.nft-rental]
+path = "contracts/nft-rental.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.nft-fractional]
+path = "contracts/nft-fractional.clar"
+clarity_version = 3
+epoch = 3.0
+
+# Token Contracts
+[contracts.fungible-token]
+path = "contracts/fungible-token.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.token-vesting]
+path = "contracts/token-vesting.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.token-airdrop]
+path = "contracts/token-airdrop.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.token-swap]
+path = "contracts/token-swap.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.token-bridge]
+path = "contracts/token-bridge.clar"
+clarity_version = 3
+epoch = 3.0
+
+# DeFi Contracts
+[contracts.lending-protocol]
+path = "contracts/lending-protocol.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.liquidity-pool]
+path = "contracts/liquidity-pool.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.yield-farming]
+path = "contracts/yield-farming.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.staking-pool]
+path = "contracts/staking-pool.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.flash-loan]
+path = "contracts/flash-loan.clar"
+clarity_version = 3
+epoch = 3.0
+
+# DAO Contracts
+[contracts.dao-governance]
+path = "contracts/dao-governance.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.dao-treasury]
+path = "contracts/dao-treasury.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.dao-voting]
+path = "contracts/dao-voting.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.dao-membership]
+path = "contracts/dao-membership.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.dao-proposals]
+path = "contracts/dao-proposals.clar"
+clarity_version = 3
+epoch = 3.0
+
+# Utility Contracts
+[contracts.escrow-service]
+path = "contracts/escrow-service.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.subscription-service]
+path = "contracts/subscription-service.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.crowdfunding]
+path = "contracts/crowdfunding.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.lottery]
+path = "contracts/lottery.clar"
+clarity_version = 3
+epoch = 3.0
+
+[contracts.multisig-wallet]
+path = "contracts/multisig-wallet.clar"
+clarity_version = 3
+epoch = 3.0
+
 [repl.analysis]
 passes = ["check_checker"]
-
-
