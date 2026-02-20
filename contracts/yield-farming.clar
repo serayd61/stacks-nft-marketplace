@@ -97,7 +97,7 @@
   )
 )
 
-(define-public (stake (farm-id uint) (amount uint))
+(define-public (deposit-stake (farm-id uint) (amount uint))
   (match (map-get? farms farm-id)
     farm
     (let (

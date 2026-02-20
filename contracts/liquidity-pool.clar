@@ -340,28 +340,7 @@
   }
 )
 
-;; Helper function for square root (integer)
-(define-read-only (sqrti (n uint))
-  (if (<= n u1)
-    n
-    (let (
-      (x (/ (+ n u1) u2))
-    )
-      (sqrti-iter n x)
-    )
-  )
-)
-
-(define-private (sqrti-iter (n uint) (x uint))
-  (let (
-    (x-new (/ (+ x (/ n x)) u2))
-  )
-    (if (>= x-new x)
-      x
-      (sqrti-iter n x-new)
-    )
-  )
-)
+;; Uses built-in sqrti function from Clarity 3
 
 ;; Admin Functions
 

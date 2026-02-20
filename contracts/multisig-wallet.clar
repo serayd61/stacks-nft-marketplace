@@ -286,7 +286,7 @@
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
     (var-set wallet-balance (- (var-get wallet-balance) amount))
     (mark-executed tx-id)
-    (ok { executed: true, amount: amount, recipient: recipient })
+    (ok { executed: true, tx-id: tx-id })
   )
 )
 
@@ -297,7 +297,7 @@
     (map-set signers new-signer true)
     (var-set signer-count (+ (var-get signer-count) u1))
     (mark-executed tx-id)
-    (ok { executed: true, new-signer: new-signer })
+    (ok { executed: true, tx-id: tx-id })
   )
 )
 
@@ -308,7 +308,7 @@
     (map-delete signers signer-to-remove)
     (var-set signer-count (- (var-get signer-count) u1))
     (mark-executed tx-id)
-    (ok { executed: true, removed-signer: signer-to-remove })
+    (ok { executed: true, tx-id: tx-id })
   )
 )
 
@@ -318,7 +318,7 @@
   )
     (var-set required-signatures new-threshold)
     (mark-executed tx-id)
-    (ok { executed: true, new-threshold: new-threshold })
+    (ok { executed: true, tx-id: tx-id })
   )
 )
 

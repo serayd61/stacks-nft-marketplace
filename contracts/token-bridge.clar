@@ -236,15 +236,15 @@
   (default-to false (map-get? oracles account))
 )
 
-(define-read-only (is-chain-enabled (chain-id uint))
-  (match (map-get? chain-configs chain-id)
+(define-read-only (is-chain-enabled (target-chain uint))
+  (match (map-get? chain-configs target-chain)
     config (get enabled config)
     false
   )
 )
 
-(define-read-only (get-chain-config (chain-id uint))
-  (map-get? chain-configs chain-id)
+(define-read-only (get-chain-config (target-chain uint))
+  (map-get? chain-configs target-chain)
 )
 
 (define-read-only (get-bridge-stats)
@@ -298,14 +298,14 @@
 )
 
 (define-public (update-chain-config 
-  (chain-id uint) 
+  (target-chain uint) 
   (name (string-ascii 32))
   (enabled bool)
   (min-confirmations uint)
   (bridge-contract (buff 64)))
   (begin
     (asserts! (is-eq tx-sender contract-owner) err-owner-only)
-    (map-set chain-configs chain-id {
+    (map-set chain-configs target-chain {
       name: name,
       enabled: enabled,
       min-confirmations: min-confirmations,

@@ -179,7 +179,7 @@
 )
 
 (define-private (validate-options (selected (list 10 uint)) (max-options uint))
-  (fold validate-option selected { valid: true, max: max-options })
+  (get valid (fold validate-option selected { valid: true, max: max-options }))
 )
 
 (define-private (validate-option (option uint) (state { valid: bool, max: uint }))
@@ -364,24 +364,7 @@
   }
 )
 
-;; Helper function for square root
-(define-read-only (sqrti (n uint))
-  (if (<= n u1)
-    n
-    (sqrti-helper n (/ n u2))
-  )
-)
-
-(define-private (sqrti-helper (n uint) (x uint))
-  (let (
-    (x-new (/ (+ x (/ n x)) u2))
-  )
-    (if (>= x-new x)
-      x
-      (sqrti-helper n x-new)
-    )
-  )
-)
+;; Helper function for square root (uses built-in sqrti)
 
 ;; Admin Functions
 

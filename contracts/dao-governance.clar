@@ -139,13 +139,11 @@
       ;; Update proposal vote counts
       (map-set proposals proposal-id
         (merge proposal
-          (if (is-eq vote-type "for")
-            { for-votes: (+ (get for-votes proposal) voter-power) }
-            (if (is-eq vote-type "against")
-              { against-votes: (+ (get against-votes proposal) voter-power) }
-              { abstain-votes: (+ (get abstain-votes proposal) voter-power) }
-            )
-          )
+          {
+            for-votes: (if (is-eq vote-type "for") (+ (get for-votes proposal) voter-power) (get for-votes proposal)),
+            against-votes: (if (is-eq vote-type "against") (+ (get against-votes proposal) voter-power) (get against-votes proposal)),
+            abstain-votes: (if (is-eq vote-type "abstain") (+ (get abstain-votes proposal) voter-power) (get abstain-votes proposal))
+          }
         )
       )
       

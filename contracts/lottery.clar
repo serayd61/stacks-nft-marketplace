@@ -174,7 +174,7 @@
         (unwrap-panic (to-consensus-buff? stacks-block-height))
         (unwrap-panic (to-consensus-buff? (get tickets-sold lottery)))
       )))
-      (winning-number (mod (buff-to-uint-be seed) (get tickets-sold lottery)))
+      (winning-number (mod (hash-to-uint seed) (get tickets-sold lottery)))
       (winner-address (unwrap! (map-get? tickets { lottery-id: lottery-id, ticket-number: winning-number }) err-lottery-not-found))
     )
       (asserts! (> stacks-block-height (get end-block lottery)) err-lottery-active)
@@ -339,14 +339,15 @@
   }
 )
 
-;; Helper function
-(define-read-only (buff-to-uint-be (b (buff 32)))
+;; Helper function - extract uint from keccak hash
+(define-private (hash-to-uint (b (buff 32)))
   (let (
-    (byte-list (list 
-      (buff-to-uint-le (unwrap-panic (slice? b u0 u1)))
-    ))
+    (byte0 (buff-to-uint-le (default-to 0x00 (element-at? b u0))))
+    (byte1 (buff-to-uint-le (default-to 0x00 (element-at? b u1))))
+    (byte2 (buff-to-uint-le (default-to 0x00 (element-at? b u2))))
+    (byte3 (buff-to-uint-le (default-to 0x00 (element-at? b u3))))
   )
-    (fold + byte-list u0)
+    (+ (* byte0 u16777216) (* byte1 u65536) (* byte2 u256) byte3)
   )
 )
 

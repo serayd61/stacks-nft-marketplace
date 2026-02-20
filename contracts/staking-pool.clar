@@ -65,7 +65,7 @@
 
 ;; Public Functions
 
-(define-public (stake (amount uint) (tier uint))
+(define-public (deposit-stake (amount uint) (tier uint))
   (let (
     (stake-id (var-get stake-nonce))
     (tier-config (unwrap! (map-get? tier-configs tier) err-invalid-tier))
