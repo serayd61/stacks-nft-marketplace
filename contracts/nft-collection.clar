@@ -75,7 +75,11 @@
   )
     (asserts! (not (var-get mint-paused)) err-owner-only)
     (asserts! (<= token-id max-supply) err-mint-limit-reached)
-    (try! (stx-transfer? mint-price tx-sender contract-owner))
+    ;; Only charge if not contract owner
+    (if (not (is-eq tx-sender contract-owner))
+      (try! (stx-transfer? mint-price tx-sender contract-owner))
+      true
+    )
     (try! (nft-mint? stacks-nft token-id recipient))
     (var-set last-token-id token-id)
     (var-set total-minted (+ (var-get total-minted) u1))

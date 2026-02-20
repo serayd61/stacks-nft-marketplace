@@ -1,0 +1,8 @@
+#V2
+(contract-call? .fungible-token mint u1000000000 tx-sender)
+(contract-call? .nft-collection mint tx-sender)
+(contract-call? .nft-collection get-mint-price)
+(stx-get-balance tx-sender)
+(contract-call? .nft-collection mint tx-sender)
+(contract-call? .lottery create-lottery u100000 u100 u1000 u50)
+(contract-call? .lottery create-lottery "Test Lottery" u100000 u100 u1000)
